@@ -15,7 +15,6 @@ window.addEventListener('scroll', () => {
 // or update its data here
 const hampers = [
     {
-        id: 'hamper1',
         name: 'hamper1',
         desc: 'i dont know',
         img: 'hampers/hamper1.jpeg',
@@ -24,7 +23,6 @@ const hampers = [
         price: 'MVR 500',
     },
     {
-        id: 'hamper2',
         name: 'hamper2',
         desc: 'i dont know',
         img: 'hampers/hamper2.jpeg',
@@ -33,7 +31,6 @@ const hampers = [
         price: 'MVR 800',
     },
     {
-        id: 'hamper3',
         name: 'hamper3',
         desc: 'i dont know',
         img: 'hampers/hamper3.jpeg',
@@ -42,7 +39,6 @@ const hampers = [
         price: 'MVR 600',
     },
     {
-        id: 'hamper4',
         name: 'hamper4',
         desc: 'i dont know',
         img: 'hampers/hamper4.jpeg',
@@ -51,7 +47,6 @@ const hampers = [
         price: 'MVR 1,200',
     },
     {
-        id: 'hamper5',
         name: 'hamper5',
         desc: 'i dont know',
         img: 'hampers/hamper5.jpeg',
@@ -60,7 +55,6 @@ const hampers = [
         price: 'MVR 700',
     },
     {
-        id: 'hamper6',
         name: 'hamper6',
         desc: 'i dont know',
         img: 'hampers/hamper6.jpeg',
@@ -72,7 +66,7 @@ const hampers = [
 
 function renderHampers() {
     const grid = document.getElementById('products-grid');
-    grid.innerHTML = hampers.map(h => {
+    grid.innerHTML = hampers.map((h, index) => {
         const inStock = h.stock > 0;
         const stockLabel = h.stock === 0
             ? `<span class="stock-pill out">Out of Stock</span>`
@@ -80,7 +74,7 @@ function renderHampers() {
             ? `<span class="stock-pill low">Only ${h.stock} left</span>`
             : `<span class="stock-pill in">${h.stock} in stock</span>`;
         return `
-        <div class="product-card ${!inStock ? 'out-of-stock' : ''}" onclick="${inStock ? `openModal('${h.id}')` : ''}">
+        <div class="product-card ${!inStock ? 'out-of-stock' : ''}" onclick="${inStock ? `openModal(${index})` : ''}">
             <div class="product-img">
                 <img src="${h.img}" alt="${h.name}" loading="lazy">
                 ${h.badge ? `<span class="product-badge">${h.badge}</span>` : ''}
@@ -94,7 +88,7 @@ function renderHampers() {
                 ${stockLabel}
                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
                     <span style="font-weight:700;font-size:1rem;color:var(--text-dark);">${h.price}</span>
-                    <button class="btn-add" ${!inStock ? 'disabled' : ''} onclick="event.stopPropagation(); ${inStock ? `openModal('${h.id}')` : ''}">
+                    <button class="btn-add" ${!inStock ? 'disabled' : ''} onclick="event.stopPropagation(); ${inStock ? `openModal(${index})` : ''}">
                         ${inStock ? 'Enquire' : 'Unavailable'}
                     </button>
                 </div>
@@ -109,27 +103,27 @@ renderHampers();
 // To add a review: copy one block and fill in the fields.
 const reviews = [
     {
-        name: 'Sara A.',
+        name: 'Unknown',
         location: 'Maldives',
         rating: 5,
-        text: 'Aura Gifts made my partner feel truly special. The presentation was elegant and the gift itself was perfectly chosen. Nothing generic about it at all.',
-        initial: 'S',
+        text: 'recieved!! thank you so much!!! the boxes are beautiful! will definitely shop from you again💗💗',
+        initial: 'U',
         color: '#b8a898',
     },
     {
-        name: 'Mohamed R.',
-        location: 'Corporate Client',
+        name: 'Unknown',
+        location: 'Maldives',
         rating: 5,
-        text: "We used Aura Gifts for our company's client appreciation gifts. The team handled everything professionally. Our clients were genuinely impressed.",
-        initial: 'M',
+        text: "hii, got the package, its pretty thnakyouu",
+        initial: 'U',
         color: '#c8b8a8',
     },
     {
-        name: 'Aisha K.',
+        name: 'Unknown',
         location: 'Maldives',
         rating: 5,
-        text: 'I was looking for something thoughtful and luxurious, not the usual gift card. Aura Gifts delivered exactly that. Will be ordering again for sure.',
-        initial: 'A',
+        text: 'Thankyou. Love the packaging🥰',
+        initial: 'U',
         color: '#a89888',
     },
 ];
@@ -156,8 +150,8 @@ renderReviews();
 // Modal
 let currentHamper = null;
 
-function openModal(hamperId) {
-    currentHamper = hampers.find(h => h.id === hamperId);
+function openModal(index) {
+    currentHamper = hampers[index];
     if (!currentHamper) return;
     document.getElementById('modal-title').textContent = currentHamper.name;
     document.getElementById('modal-tag').textContent = currentHamper.desc;
