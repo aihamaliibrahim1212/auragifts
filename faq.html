@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Aura Gifts</title>
+    <meta name="description" content="Frequently asked questions about Aura Gifts hampers and ordering.">
+    <link rel="icon" href="auragiftslogo.jpeg" type="image/jpeg">
+    <link rel="apple-touch-icon" href="auragiftslogo.jpeg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .faq-hero {
+            padding: 140px 0 60px;
+            background: var(--off-white);
+            border-bottom: 1px solid var(--border-gray);
+            text-align: center;
+        }
+        .faq-hero p {
+            color: var(--text-mid);
+            font-size: 1.05rem;
+            max-width: 480px;
+            margin: 12px auto 0;
+        }
+
+        .faq-section { padding: 72px 0; background: var(--white); }
+
+        .faq-list { max-width: 760px; margin: 0 auto; }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-gray);
+        }
+        .faq-item:first-child { border-top: 1px solid var(--border-gray); }
+
+        .faq-question {
+            width: 100%; background: none; border: none;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 22px 4px; cursor: pointer;
+            font-family: 'Inter', sans-serif; font-size: 1rem;
+            font-weight: 600; color: var(--text-dark);
+            text-align: left; gap: 16px;
+            transition: color 0.2s;
+        }
+        .faq-question:hover { color: var(--gold-dark); }
+        .faq-question i {
+            color: var(--gold-dark); font-size: 0.85rem;
+            flex-shrink: 0; transition: transform 0.3s ease;
+        }
+        .faq-item.open .faq-question i { transform: rotate(180deg); }
+
+        .faq-answer {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.35s ease;
+            padding: 0 4px;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 400px;
+            padding-bottom: 20px;
+        }
+        .faq-answer p {
+            color: var(--text-mid);
+            font-size: 0.95rem;
+            line-height: 1.75;
+        }
+
+        .faq-cta {
+            background: var(--gold-pale);
+            border-top: 1px solid var(--loading-dark);
+            text-align: center;
+            padding: 64px 0;
+        }
+        .faq-cta h2 { margin-bottom: 10px; }
+        .faq-cta p { color: var(--text-mid); margin-bottom: 28px; }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <span><span class="logo-aura">aura</span><span class="logo-gifts">gifts</span></span>
+                </a>
+                <div class="nav-links">
+                    <a href="index.html#products">Shop</a>
+                    <a href="index.html#testimonials">Reviews</a>
+                    <a href="index.html#contact">Corporate Orders</a>
+                </div>
+                <div class="nav-buttons">
+                    <a href="index.html#products" class="btn btn-outline">Browse Gifts</a>
+                    <a href="mailto:aura.gifts.mv@gmail.com" class="btn btn-gold">Corporate Orders</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- FAQ Hero -->
+    <div class="faq-hero">
+        <div class="container">
+            <span class="section-label">Support</span>
+            <h1 style="font-size:2.8rem;">Frequently Asked Questions</h1>
+            <p>Everything you need to know about our hampers and ordering process.</p>
+        </div>
+    </div>
+
+    <!-- FAQ List -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="faq-list" id="faq-list">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="faq-cta">
+        <div class="container">
+            <h2>Still have questions?</h2>
+            <p>Reach out directly and we'll get back to you as soon as possible.</p>
+            <a href="mailto:aura.gifts.mv@gmail.com" class="btn btn-gold btn-lg">
+                <i class="fas fa-envelope"></i> aura.gifts.mv@gmail.com
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-bottom" style="justify-content:center;">
+                <p>&copy; 2024 Aura Gifts. Art of refined gifting.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ─── FAQ data ─────────────────────────────────────────────────
+        // To add a question: copy one object and fill in q and a.
+        const faqs = [
+            {
+                q: 'What is included in a hamper?',
+                a: 'Each hamper is carefully curated with a selection of premium items. The exact contents vary by hamper, so check the individual hamper description for details, or feel free to enquire with us directly.',
+            },
+            {
+                q: 'How do I place an order?',
+                a: 'Browse our collection, click "Enquire" on the hamper you love, fill in your details, and send us a message. We will get back to you to confirm your order.',
+            },
+            {
+                q: 'Do you offer delivery?',
+                a: 'Yes, we offer delivery across the Maldives. Delivery fees and timelines depend on your location. Contact us at aura.gifts.mv@gmail.com for specific delivery details.',
+            },
+            {
+                q: 'Can I customise a hamper?',
+                a: 'Absolutely. We offer fully bespoke hampers tailored to your occasion, preferences, and budget. Reach out to us via email to discuss your requirements.',
+            },
+            {
+                q: 'Do you handle corporate orders?',
+                a: 'Yes, we specialise in corporate gifting. Whether it\'s client appreciation, staff gifts, or event hampers, we can accommodate bulk orders with custom branding. Email us at aura.gifts.mv@gmail.com.',
+            },
+            {
+                q: 'How far in advance should I order?',
+                a: 'We recommend placing your order at least 3–5 days in advance to ensure availability and timely delivery. For large corporate orders, please allow more time.',
+            },
+            {
+                q: 'What payment methods do you accept?',
+                a: 'We accept bank transfers and other local payment methods. Payment details will be shared once your order is confirmed.',
+            },
+            {
+                q: 'Can I include a personalised message?',
+                a: 'Yes! When you enquire, simply include your message in the form and we will ensure it is beautifully presented with your hamper.',
+            },
+        ];
+
+        function renderFaqs() {
+            const list = document.getElementById('faq-list');
+            list.innerHTML = faqs.map((f, i) => `
+                <div class="faq-item" id="faq-${i}">
+                    <button class="faq-question" onclick="toggleFaq(${i})">
+                        <span>${f.q}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>${f.a}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleFaq(index) {
+            const item = document.getElementById('faq-' + index);
+            const isOpen = item.classList.contains('open');
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
+            // Open clicked if it wasn't already open
+            if (!isOpen) item.classList.add('open');
+        }
+
+        renderFaqs();
+
+        // Header scroll
+        window.addEventListener('scroll', () => {
+            document.getElementById('header').classList.toggle('scrolled', window.scrollY > 60);
+        });
+    </script>
+</body>
+</html>
