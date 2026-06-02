@@ -240,7 +240,7 @@ h2 {
 
 /* Footer */
 footer { background: var(--text-dark); color: rgba(255,255,255,0.7); padding: 60px 0 28px; }
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
 .footer-brand .logo { color: var(--white); margin-bottom: 14px; display: flex; }
 .footer-brand p { font-size: 0.85rem; line-height: 1.7; max-width: 280px; }
 .footer-socials { display: flex; gap: 12px; margin-top: 20px; }
