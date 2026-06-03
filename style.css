@@ -486,7 +486,7 @@ footer { background: #787878; color: rgba(255,255,255,0.85); padding: 60px 0 28p
 .full-banner {
     width: 100%;
     height: 520px;
-    /* Placeholder — replace with: background-image: url('your-banner.jpg'); */
+    /* Placeholder. replace with: background-image: url('your-banner.jpg'); */
     background-color: #d4c9b0;
     background-size: cover;
     background-position: center;

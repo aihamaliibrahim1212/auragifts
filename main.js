@@ -277,7 +277,7 @@ function renderCart() {
         return;
     }
 
-    // Calculate total — strip non-numeric chars from price
+    // Calculate total strip non-numeric chars from price
     const grandTotal = cart.reduce((sum, item) => {
         const num = parseFloat(item.price.replace(/[^0-9.]/g, '').replace(',', '')) || 0;
         return sum + num * item.qty;
@@ -314,7 +314,7 @@ function renderCart() {
 
 function cartCheckout() {
     const lines = cart.map(item => `- ${item.name} x${item.qty} (${item.price})`).join('\n');
-    const subject = encodeURIComponent('Order Enquiry — Aura Gifts');
+    const subject = encodeURIComponent('Order Enquiry - Aura Gifts');
     const body = encodeURIComponent(
         'Hi Aura Gifts,\n\nI would like to enquire about the following order:\n\n' + lines +
         '\n\nPlease let me know availability and payment details.\n\nThank you.'
@@ -342,3 +342,9 @@ function toggleCart() {
 
 // Init cart count
 updateCartCount();
+
+// Auto-open cart if redirected from another page
+if (window.location.hash === '#cart') {
+    openCart();
+    history.replaceState(null, '', window.location.pathname);
+}
