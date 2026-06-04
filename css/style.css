@@ -603,13 +603,15 @@ footer { background: #787878; color: rgba(255,255,255,0.85); padding: 60px 0 28p
 
 /* ─── Mobile Responsive ──────────────────────────────────────────── */
 @media (max-width: 768px) {
-    :root { --header-h: 100px; }
+    :root { --header-h: 80px; }
 
     .top-bar { font-size: 0.65rem; letter-spacing: 0.5px; padding: 6px 12px; }
 
     /* Hide desktop nav, show hamburger */
     #desktop-nav { display: none; }
     .hamburger { display: flex; }
+    /* Remove the container height when nav is hidden */
+    header .container { padding: 0; }
 
     /* Search bar row — switch from absolute to flex */
     .header-search-bar { padding: 8px 16px; }
