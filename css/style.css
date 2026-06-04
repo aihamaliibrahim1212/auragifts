@@ -422,7 +422,7 @@ footer { background: #787878; color: rgba(255,255,255,0.85); padding: 60px 0 28p
 }
 .cart-close:hover { color: var(--text-dark); }
 
-.cart-items { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 16px 24px; }
+.cart-items { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 16px 24px; min-height: 0; }
 
 .cart-empty {
     display: flex; flex-direction: column; align-items: center;
@@ -826,4 +826,30 @@ footer { background: #787878; color: rgba(255,255,255,0.85); padding: 60px 0 28p
     .banner-arrow { width: 36px; height: 36px; font-size: 0.85rem; }
     .banner-arrow-left  { left: 12px; }
     .banner-arrow-right { right: 12px; }
+}
+
+/* ─── Cart mobile fix ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .cart-drawer {
+        display: flex;
+        flex-direction: column;
+        max-height: 100vh;
+    }
+    .cart-items {
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+        -webkit-overflow-scrolling: touch;
+    }
+    .cart-footer {
+        flex-shrink: 0;
+        padding: 14px 16px env(safe-area-inset-bottom, 20px);
+        background: var(--white);
+        position: sticky;
+        bottom: 0;
+    }
+    .cart-footer .btn {
+        font-size: 0.85rem;
+        padding: 12px 16px;
+    }
 }
