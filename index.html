@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aura Gifts - Art of Refined Gifting</title>
     <meta name="description" content="Luxury, thoughtful, and personal gifts curated for every occasion. For corporate order inquiries contact aihamaliibrahim989@gmail.com">
-    <link rel="icon" href="auragiftslogo.jpeg" type="image/jpeg">
-    <link rel="apple-touch-icon" href="auragiftslogo.jpeg">
+    <link rel="icon" href="img/logos/auragiftslogo.jpeg" type="image/jpeg">
+    <link rel="apple-touch-icon" href="img/logos/auragiftslogo.jpeg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
 
@@ -19,28 +19,47 @@
         <div class="top-bar">FOR QUERIES PLEASE CALL 9992070</div>
         <div class="header-search-bar">
             <a href="#" class="logo">
-                <img src="auragiftswidelogo.jpeg" alt="Aura Gifts" class="logo-wide">
+                <img src="img/logos/auragiftswidelogo.jpeg" alt="Aura Gifts" class="logo-wide">
             </a>
             <div class="header-search-wrap">
                 <i class="fas fa-search header-search-icon"></i>
                 <input type="text" id="hamper-search" placeholder="Search hampers..." autocomplete="off">
+                <div class="search-dropdown" id="search-dropdown"></div>
             </div>
-            <button class="cart-btn" onclick="toggleCart()">
-                <i class="fas fa-shopping-basket"></i>
-                <span class="cart-count" id="cart-count">0</span>
-            </button>
+            <div class="header-right">
+                <button class="cart-btn" onclick="toggleCart()">
+                    <i class="fas fa-shopping-basket"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </button>
+                <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
         </div>
         <div class="container">
-            <nav class="navbar">
+            <nav class="navbar" id="desktop-nav">
                 <div class="nav-links">
-                    <a href="#products">Instant Hampers</a>
-                    <a href="mailto:aihamaliibrahim989@gmail.com">Customised Orders</a>
-                    <a href="mailto:aihamaliibrahim989@gmail.com">Create Your Own</a>
-                    <a href="mailto:aihamaliibrahim989@gmail.com">Corporate Orders</a>
+                    <a href="pages/hampers.html">Instant Hampers</a>
+                    <a href="pages/customised-orders.html">Customised Orders</a>
+                    <a href="pages/create-your-own.html">Create Your Own</a>
+                    <a href="pages/corporate-orders.html">Corporate Orders</a>
                 </div>
             </nav>
         </div>
     </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <nav>
+            <a href="pages/hampers.html" onclick="closeMobileMenu()">Instant Hampers</a>
+            <a href="pages/customised-orders.html" onclick="closeMobileMenu()">Customised Orders</a>
+            <a href="pages/create-your-own.html" onclick="closeMobileMenu()">Create Your Own</a>
+            <a href="pages/corporate-orders.html" onclick="closeMobileMenu()">Corporate Orders</a>
+            <a href="pages/faq.html" onclick="closeMobileMenu()">FAQ</a>
+            <a href="mailto:aihamaliibrahim989@gmail.com">Contact Us</a>
+        </nav>
+    </div>
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
 
     <!-- Cart Drawer -->
     <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
@@ -73,6 +92,9 @@
                 <span class="section-label">Our Collection</span>
                 <h2>Hampers Worth Giving</h2>
                 <p class="section-intro">Luxury, thoughtful, and personal. every hamper is curated to leave a lasting impression.</p>
+                <a href="pages/hampers.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:0.9rem;font-weight:600;color:var(--gold-dark);text-decoration:none;">
+                    View All Hampers <i class="fas fa-arrow-right" style="font-size:0.8rem;"></i>
+                </a>
             </div>
             <div class="products-grid" id="products-grid"></div>
         </div>
@@ -121,9 +143,9 @@
                     <h4>Shop</h4>
                     <ul class="footer-links">
                         <li><a href="#products">All Hampers</a></li>
-                        <li><a href="mailto:aihamaliibrahim989@gmail.com">Corporate Orders</a></li>
+                        <li><a href="pages/corporate-orders.html">Corporate Orders</a></li>
                         <li><a href="#testimonials">Reviews</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="pages/faq.html">FAQ</a></li>
                         <li><a href="https://www.instagram.com/auragifts.mv/" target="_blank">Instagram</a></li>
                     </ul>
                 </div>
@@ -131,9 +153,9 @@
                     <h4>Company</h4>
                     <ul class="footer-links">
                         <li><a href="#">About Us</a></li>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="terms.html">Terms of Service</a></li>
-                        <li><a href="mailto:aihamaliibrahim989@gmail.com">Corporate Orders</a></li>
+                        <li><a href="pages/privacy.html">Privacy Policy</a></li>
+                        <li><a href="pages/terms.html">Terms of Service</a></li>
+                        <li><a href="pages/corporate-orders.html">Corporate Orders</a></li>
                         <li><a href="mailto:aihamaliibrahim989@gmail.com">aihamaliibrahim989@gmail.com</a></li>
                     </ul>
                 </div>
@@ -172,6 +194,21 @@
         </div>
     </div>
 
-    <script src="main.js?v=3"></script>
+    <script src="js/main.js?v=3"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('open');
+            document.getElementById('mobile-menu-overlay').classList.toggle('open');
+            document.getElementById('hamburger').classList.toggle('open');
+            document.body.style.overflow = document.getElementById('mobile-menu').classList.contains('open') ? 'hidden' : '';
+        }
+        function closeMobileMenu() {
+            document.getElementById('mobile-menu').classList.remove('open');
+            document.getElementById('mobile-menu-overlay').classList.remove('open');
+            document.getElementById('hamburger').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    </script>
 </body>
 </html>
