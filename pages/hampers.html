@@ -47,13 +47,13 @@
             <a href="create-your-own.html" onclick="closeMobileMenu()">Create Your Own</a>
             <a href="corporate-orders.html" onclick="closeMobileMenu()">Corporate Orders</a>
             <a href="faq.html" onclick="closeMobileMenu()">FAQ</a>
-            <a href="mailto:aihamaliibrahim989@gmail.com">Contact Us</a>
+            <a href="mailto:aura.gifts.mv@gmail.com">Contact Us</a>
         </nav>
     </div>
     <div class="mobile-menu-overlay" id="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
 
     <!-- Shop Hero -->
-    <div style="background:var(--off-white);border-bottom:1px solid var(--border-gray);padding:40px 0 32px;text-align:center;">
+    <div class="page-top-offset" style="background:var(--off-white);border-bottom:1px solid var(--border-gray);padding:40px 0 32px;text-align:center;">
         <div class="container">
             <span class="section-label">Our Collection</span>
             <h1 style="font-size:2.6rem;">All Hampers</h1>
@@ -100,7 +100,7 @@
                         <li><a href="privacy.html">Privacy Policy</a></li>
                         <li><a href="terms.html">Terms of Service</a></li>
                         <li><a href="corporate-orders.html">Corporate Orders</a></li>
-                        <li><a href="mailto:aihamaliibrahim989@gmail.com">aihamaliibrahim989@gmail.com</a></li>
+                        <li><a href="mailto:aura.gifts.mv@gmail.com">aura.gifts.mv@gmail.com</a></li>
                     </ul>
                 </div>
             </div>
@@ -159,13 +159,54 @@
             const existing = cart.find(item => item.index === index);
             const currentQty = existing ? existing.qty : 0;
             if (currentQty >= h.stock) {
-                alert(`Sorry, only ${h.stock} of "${h.name}" available.`);
+                showCartToastWarning(`Only ${h.stock} of "${h.name}" available`);
                 return;
             }
             const normalizedImg = h.img.replace(/^\.\.\//, '');
             if (existing) { existing.qty += 1; }
             else { cart.push({ index, name: h.name, price: h.price, img: normalizedImg, qty: 1, stock: h.stock }); }
-            saveCart(); updateCartCount(); renderCart(); openCart();
+            saveCart(); updateCartCount(); renderCart();
+            showCartToast(h.name);
+        }
+
+        function showCartToast(name) {
+            const old = document.getElementById('cart-toast');
+            if (old) old.remove();
+            const toast = document.createElement('div');
+            toast.id = 'cart-toast';
+            toast.className = 'cart-toast';
+            toast.innerHTML = `
+                <div class="cart-toast-label">
+                    <i class="fas fa-check-circle"></i>
+                    <span>${name} added to cart</span>
+                </div>
+                <div class="cart-toast-bar-wrap">
+                    <div class="cart-toast-bar"></div>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
+            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 1800);
+        }
+
+        function showCartToastWarning(msg) {
+            const old = document.getElementById('cart-toast');
+            if (old) old.remove();
+            const toast = document.createElement('div');
+            toast.id = 'cart-toast';
+            toast.className = 'cart-toast warning';
+            toast.innerHTML = `
+                <div class="cart-toast-label">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>${msg}</span>
+                </div>
+                <div class="cart-toast-bar-wrap">
+                    <div class="cart-toast-bar"></div>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
+            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 1800);
         }
 
         // Search
@@ -228,7 +269,7 @@
             if (!name || !email) { alert('Please fill in your name and email.'); return; }
             const subject = encodeURIComponent('Hamper Enquiry ' + currentHamper.name);
             const body = encodeURIComponent('Hi Aura Gifts,\n\nI am interested in: ' + currentHamper.name + '\n\nName: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + document.getElementById('modal-message').value);
-            window.location.href = 'mailto:aihamaliibrahim989@gmail.com?subject=' + subject + '&body=' + body;
+            window.location.href = 'mailto:aura.gifts.mv@gmail.com?subject=' + subject + '&body=' + body;
             closeModal();
         }
         document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeCart(); } });
@@ -258,7 +299,7 @@
                     <i class="fas fa-paper-plane"></i> Send Enquiry
                 </button>
                 <p style="text-align:center;margin-top:10px;font-size:0.78rem;color:var(--text-light);">
-                    We'll get back to you at <strong>aihamaliibrahim989@gmail.com</strong>
+                    We'll get back to you at <strong>aura.gifts.mv@gmail.com</strong>
                 </p>
             </div>
         </div>

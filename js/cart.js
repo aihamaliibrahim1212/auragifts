@@ -78,7 +78,7 @@ function renderCart() {
         // Fix image path: stored as 'img/hampers/...' (root-relative), prefix if in /pages/
         const imgSrc = _pathPrefix + item.img;
         return `
-        <div class="cart-item">
+        <div class="cart-item" data-index="${item.index}">
             <img src="${imgSrc}" alt="${item.name}" class="cart-item-img">
             <div class="cart-item-info">
                 <div class="cart-item-name">${item.name}</div>
@@ -106,20 +106,60 @@ function renderCart() {
 }
 
 function removeFromCart(index) {
-    cart = cart.filter(item => item.index !== index);
-    saveCart(); updateCartCount(); renderCart();
+    const el = document.querySelector(`.cart-item[data-index="${index}"]`);
+    if (el) {
+        el.classList.add('removing');
+        setTimeout(() => {
+            cart = cart.filter(item => item.index !== index);
+            saveCart(); updateCartCount();
+            // If cart now empty, fade in the empty state smoothly
+            const container = document.getElementById('cart-items');
+            const footer = document.getElementById('cart-footer');
+            if (cart.length === 0) {
+                container.style.overflow = 'hidden';
+                container.style.opacity = '0';
+                setTimeout(() => {
+                    renderCart();
+                    container.style.overflow = '';
+                    container.style.transition = 'opacity 0.2s ease';
+                    container.style.opacity = '1';
+                    setTimeout(() => container.style.transition = '', 200);
+                }, 50);
+            } else {
+                renderCart();
+            }
+        }, 280);
+    } else {
+        cart = cart.filter(item => item.index !== index);
+        saveCart(); updateCartCount(); renderCart();
+    }
 }
 
 function changeQty(index, delta) {
     const item = cart.find(item => item.index === index);
     if (!item) return;
     if (delta > 0 && item.stock !== undefined && item.qty >= item.stock) {
-        alert(`Sorry, only ${item.stock} of "${item.name}" available.`);
+        if (typeof showWarningToast === 'function') {
+            showWarningToast(`Only ${item.stock} of "${item.name}" available`);
+        }
+        return;
+    }
+    if (delta < 0 && item.qty <= 1) {
+        removeFromCart(index);
         return;
     }
     item.qty += delta;
-    if (item.qty <= 0) removeFromCart(index);
-    else { saveCart(); updateCartCount(); renderCart(); }
+    saveCart(); updateCartCount();
+    // Animate just the qty number
+    const qtyEl = document.querySelector(`.cart-item[data-index="${index}"] .cart-item-qty span`);
+    if (qtyEl) {
+        qtyEl.textContent = item.qty;
+        qtyEl.classList.remove('qty-pop');
+        void qtyEl.offsetWidth; // reflow
+        qtyEl.classList.add('qty-pop');
+    } else {
+        renderCart();
+    }
 }
 
 function cartCheckout() {
@@ -129,7 +169,7 @@ function cartCheckout() {
         'Hi Aura Gifts,\n\nI would like to enquire about the following order:\n\n' + lines +
         '\n\nPlease let me know availability and payment details.\n\nThank you.'
     );
-    window.location.href = 'mailto:aihamaliibrahim989@gmail.com?subject=' + subject + '&body=' + body;
+    window.location.href = 'mailto:aura.gifts.mv@gmail.com?subject=' + subject + '&body=' + body;
 }
 
 function openCart() {
@@ -137,12 +177,14 @@ function openCart() {
     document.getElementById('cart-drawer').classList.add('open');
     document.getElementById('cart-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';
 }
 
 function closeCart() {
     document.getElementById('cart-drawer').classList.remove('open');
     document.getElementById('cart-overlay').classList.remove('open');
     document.body.style.overflow = '';
+    document.body.style.touchAction = '';
 }
 
 function toggleCart() {

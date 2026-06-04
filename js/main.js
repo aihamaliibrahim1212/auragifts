@@ -263,7 +263,7 @@ function handleEnquiry() {
         '\nEmail: ' + email +
         '\n\nMessage:\n' + document.getElementById('modal-message').value
     );
-    window.location.href = 'mailto:aihamaliibrahim989@gmail.com?subject=' + subject + '&body=' + body;
+    window.location.href = 'mailto:aura.gifts.mv@gmail.com?subject=' + subject + '&body=' + body;
     closeModal();
 }
 
@@ -284,7 +284,7 @@ function addToCart(index) {
     const currentQty = existing ? existing.qty : 0;
 
     if (currentQty >= h.stock) {
-        alert(`Sorry, only ${h.stock} of "${h.name}" available.`);
+        showWarningToast(`Only ${h.stock} of "${h.name}" available`);
         return;
     }
 
@@ -296,5 +296,33 @@ function addToCart(index) {
     saveCart();
     updateCartCount();
     renderCart();
-    openCart();
+    showCartToast(h.name);
+}
+
+function showCartToast(name) {
+    _showToast(name + ' added to cart', 'check-circle', false);
+}
+
+function showWarningToast(msg) {
+    _showToast(msg, 'exclamation-circle', true);
+}
+
+function _showToast(text, icon, isWarning) {
+    const old = document.getElementById('cart-toast');
+    if (old) old.remove();
+    const toast = document.createElement('div');
+    toast.id = 'cart-toast';
+    toast.className = 'cart-toast' + (isWarning ? ' warning' : '');
+    toast.innerHTML = `
+        <div class="cart-toast-label">
+            <i class="fas fa-${icon}"></i>
+            <span>${text}</span>
+        </div>
+        <div class="cart-toast-bar-wrap">
+            <div class="cart-toast-bar"></div>
+        </div>
+    `;
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
+    setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 1800);
 }
