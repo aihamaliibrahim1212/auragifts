@@ -21,7 +21,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; overscroll-behavior: none; background: #d4c9b0; }
+html { scroll-behavior: smooth; overscroll-behavior-x: none; background: #d4c9b0; }
 
 body {
     font-family: 'Inter', sans-serif;
@@ -30,7 +30,7 @@ body {
     overflow-x: hidden;
     line-height: 1.6;
     padding-top: var(--header-h);
-    overscroll-behavior: none;
+    overscroll-behavior-x: none;
 }
 
 ::-webkit-scrollbar { width: 10px; }
