@@ -71,17 +71,31 @@
         <div class="cart-footer" id="cart-footer"></div>
     </div>
 
-    <!-- Full Width Banner -->
-    <!-- To use your own image: replace the background-color with background-image: url('your-banner.jpg') -->
-    <div class="full-banner">
-        <div class="full-banner-content">
-            <div class="full-banner-eyebrow">
-                <i class="fas fa-star"></i> Luxury · Thoughtful · Personal
+    <!-- Banner Carousel -->
+    <div class="banner-carousel" id="banner-carousel">
+        <div class="banner-slides" id="banner-slides">
+            <div class="banner-slide" style="background-image:url('img/banners/banner1.jpg');">
+                <div class="full-banner-content">
+                    <div class="full-banner-eyebrow"><i class="fas fa-star"></i> Luxury · Thoughtful · Personal</div>
+                    <h2 class="full-banner-title">The Art of <em>Refined</em> Gifting</h2>
+                    <p class="full-banner-sub">Luxury, thoughtful, and deeply personal. Aura Gifts curates gifts that leave a lasting impression for the people who deserve nothing but the best.</p>
+                </div>
             </div>
-            <h2 class="full-banner-title">The Art of <em>Refined</em> Gifting</h2>
-            <p class="full-banner-sub">Luxury, thoughtful, and deeply personal. Aura Gifts curates gifts that leave a lasting impression. for the people who deserve nothing but the best.</p>
-            <a href="#products" class="btn btn-gold" style="margin-top:8px;">Shop Hampers</a>
+            <div class="banner-slide" style="background-image:url('img/banners/banner2.avif');">
+                <div class="full-banner-content">
+                    <div class="full-banner-eyebrow"><i class="fas fa-gift"></i> Curated With Care</div>
+                    <h2 class="full-banner-title">Every Gift <em>Tells</em> a Story</h2>
+                    <p class="full-banner-sub">From birthdays to corporate events, our hampers are crafted to make every moment unforgettable.</p>
+                </div>
+            </div>
         </div>
+
+        <!-- Arrows -->
+        <button class="banner-arrow banner-arrow-left" onclick="bannerPrev()" aria-label="Previous"></button>
+        <button class="banner-arrow banner-arrow-right" onclick="bannerNext()" aria-label="Next"></button>
+
+        <!-- Dots -->
+        <div class="banner-dots" id="banner-dots"></div>
     </div>
 
     <!-- Hampers Section -->
@@ -192,6 +206,98 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Banner Carousel
+        (function() {
+            const track = document.getElementById('banner-slides');
+            const dotsContainer = document.getElementById('banner-dots');
+            if (!track) return;
+
+            const originalSlides = Array.from(track.children);
+            const total = originalSlides.length;
+            if (!total) return;
+
+            // Clone first and last for infinite loop
+            const firstClone = originalSlides[0].cloneNode(true);
+            const lastClone = originalSlides[total - 1].cloneNode(true);
+            track.appendChild(firstClone);
+            track.insertBefore(lastClone, originalSlides[0]);
+
+            // Start at index 1 (first real slide)
+            let current = 1;
+            let timer;
+            let isTransitioning = false;
+
+            track.style.transform = `translateX(-${current * 100}%)`;
+
+            // Build dots
+            for (let i = 0; i < total; i++) {
+                const dot = document.createElement('button');
+                dot.className = 'banner-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+                dot.addEventListener('click', () => { if (!isTransitioning) goTo(i + 1); });
+                dotsContainer.appendChild(dot);
+            }
+
+            function updateDots() {
+                const realIndex = current - 1;
+                dotsContainer.querySelectorAll('.banner-dot').forEach((d, i) => {
+                    d.classList.toggle('active', i === realIndex);
+                });
+            }
+
+            function goTo(index) {
+                if (isTransitioning) return;
+                isTransitioning = true;
+                current = index;
+                track.classList.remove('no-transition');
+                track.style.transform = `translateX(-${current * 100}%)`;
+                updateDots();
+                resetTimer();
+            }
+
+            track.addEventListener('transitionend', () => {
+                isTransitioning = false;
+                // Jump without animation for infinite loop
+                if (current === 0) {
+                    track.classList.add('no-transition');
+                    current = total;
+                    track.style.transform = `translateX(-${current * 100}%)`;
+                    void track.offsetWidth;
+                    track.classList.remove('no-transition');
+                } else if (current === total + 1) {
+                    track.classList.add('no-transition');
+                    current = 1;
+                    track.style.transform = `translateX(-${current * 100}%)`;
+                    void track.offsetWidth;
+                    track.classList.remove('no-transition');
+                }
+            });
+
+            function resetTimer() {
+                clearInterval(timer);
+                timer = setInterval(() => goTo(current + 1), 5000);
+            }
+
+            window.bannerNext = () => goTo(current + 1);
+            window.bannerPrev = () => goTo(current - 1);
+
+            resetTimer();
+            updateDots();
+
+            const carousel = document.getElementById('banner-carousel');
+            carousel.addEventListener('mouseenter', () => clearInterval(timer));
+            carousel.addEventListener('mouseleave', resetTimer);
+
+            let touchStartX = 0;
+            carousel.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+            carousel.addEventListener('touchend', e => {
+                const diff = touchStartX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 40) diff > 0 ? bannerNext() : bannerPrev();
+            });
+        })();
+    </script>
 
     <script src="js/main.js?v=3"></script>
     <script src="js/cart.js"></script>

@@ -475,11 +475,10 @@ footer { background: #787878; color: rgba(255,255,255,0.85); padding: 60px 0 28p
     flex-shrink: 0;
 }
 
-/* Full Width Banner */
+/* Full Width Banner — kept for non-carousel pages */
 .full-banner {
     width: 100%;
     height: 520px;
-    margin-top: var(--header-h);
     /* Placeholder. replace with: background-image: url('your-banner.jpg'); */
     background-color: #d4c9b0;
     background-size: cover;
@@ -740,3 +739,83 @@ footer { background: #787878; color: rgba(255,255,255,0.85); padding: 60px 0 28p
     100% { transform: scale(1); }
 }
 .qty-pop { animation: qty-pop 0.2s ease; }
+
+/* ─── Banner Carousel ────────────────────────────────────────────── */
+.banner-carousel {
+    position: relative;
+    width: 100%;
+    height: 520px;
+    margin-top: var(--header-h);
+    overflow: hidden;
+}
+.banner-slides {
+    display: flex;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+.banner-slides.no-transition {
+    transition: none;
+}
+.banner-slide {
+    flex: 0 0 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.banner-slide::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.35);
+}
+.banner-slide .full-banner-content { position: relative; z-index: 1; }
+
+/* Arrows */
+.banner-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: none; border: none;
+    width: 32px; height: 32px;
+    cursor: pointer; z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+}
+.banner-arrow-left  { left: 16px; }
+.banner-arrow-right { right: 16px; }
+.banner-arrow::before {
+    content: '';
+    display: block;
+    width: 12px; height: 12px;
+    border-top: 1.5px solid #444;
+    border-right: 1.5px solid #444;
+}
+.banner-arrow-left::before  { transform: rotate(-135deg) translateY(-2px); }
+.banner-arrow-right::before { transform: rotate(45deg) translateY(-2px); }
+
+/* Dots */
+.banner-dots {
+    position: absolute; bottom: 18px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 10;
+}
+.banner-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.45);
+    border: none; cursor: pointer;
+    transition: background 0.25s, transform 0.25s;
+    padding: 0;
+}
+.banner-dot.active {
+    background: white;
+    transform: scale(1.25);
+}
+
+@media (max-width: 768px) {
+    .banner-carousel { height: 300px; }
+    .banner-arrow { width: 36px; height: 36px; font-size: 0.85rem; }
+    .banner-arrow-left  { left: 12px; }
+    .banner-arrow-right { right: 12px; }
+}
