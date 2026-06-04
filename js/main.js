@@ -104,8 +104,16 @@ renderHampers();
 // Hamper search — autocomplete + redirect to search.html
 (function initSearch() {
     const input = document.getElementById('hamper-search');
-    const dropdown = document.getElementById('search-dropdown');
-    if (!input || !dropdown) return;
+    if (!input) return;
+
+    // Create dropdown directly in body so it's outside the header stacking context
+    let dropdown = document.getElementById('search-dropdown');
+    if (!dropdown) {
+        dropdown = document.createElement('div');
+        dropdown.id = 'search-dropdown';
+        dropdown.className = 'search-dropdown';
+        document.body.appendChild(dropdown);
+    }
 
     function getMatches(query) {
         const words = query.toLowerCase().split(/\s+/).filter(Boolean);
@@ -115,29 +123,38 @@ renderHampers();
         });
     }
 
+    function positionDropdown() {
+        const rect = input.getBoundingClientRect();
+        dropdown.style.top = (rect.bottom + 4) + 'px';
+        dropdown.style.left = rect.left + 'px';
+        dropdown.style.width = rect.width + 'px';
+    }
+
     function showDropdown(query) {
         if (!query) { dropdown.innerHTML = ''; dropdown.classList.remove('open'); return; }
         const matches = getMatches(query);
         if (!matches.length) {
             dropdown.innerHTML = `<div class="search-dd-item search-dd-none">No results for "${query}"</div>`;
-            dropdown.classList.add('open');
-            return;
-        }
-        dropdown.innerHTML = matches.map(h => `
-            <div class="search-dd-item" onclick="goSearch('${encodeURIComponent(h.name)}')">
-                <i class="fas fa-gift" style="color:var(--gold-dark);font-size:0.85rem;flex-shrink:0;"></i>
-                <div>
-                    <div class="search-dd-name">${h.name}</div>
-                    ${h.badge ? `<div class="search-dd-badge">${h.badge}</div>` : ''}
+        } else {
+            dropdown.innerHTML = matches.map(h => `
+                <div class="search-dd-item" onclick="goSearch('${encodeURIComponent(h.name)}')">
+                    <div>
+                        <div class="search-dd-name">${h.name}</div>
+                        ${h.badge ? `<div class="search-dd-badge">${h.badge}</div>` : ''}
+                    </div>
                 </div>
-            </div>
-        `).join('');
-        // "See all results" row
-        dropdown.innerHTML += `<div class="search-dd-item search-dd-all" onclick="goSearch('${encodeURIComponent(query)}')">
-            <i class="fas fa-search"></i> See all results for "<strong>${query}</strong>"
-        </div>`;
+            `).join('');
+            dropdown.innerHTML += `<div class="search-dd-item search-dd-all" onclick="goSearch('${encodeURIComponent(query)}')">
+                <i class="fas fa-search"></i> See all results for "<strong>${query}</strong>"
+            </div>`;
+        }
+        positionDropdown();
         dropdown.classList.add('open');
     }
+
+    window.addEventListener('resize', () => {
+        if (dropdown.classList.contains('open')) positionDropdown();
+    });
 
     input.addEventListener('input', () => showDropdown(input.value.trim()));
 

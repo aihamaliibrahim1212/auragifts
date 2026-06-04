@@ -14,8 +14,15 @@ const searchHampers = [
 
 (function initSearch() {
     const input = document.getElementById('hamper-search');
-    const dropdown = document.getElementById('search-dropdown');
-    if (!input || !dropdown) return;
+    if (!input) return;
+
+    let dropdown = document.getElementById('search-dropdown');
+    if (!dropdown) {
+        dropdown = document.createElement('div');
+        dropdown.id = 'search-dropdown';
+        dropdown.className = 'search-dropdown';
+        document.body.appendChild(dropdown);
+    }
 
     function getMatches(query) {
         const words = query.toLowerCase().split(/\s+/).filter(Boolean);
@@ -35,7 +42,6 @@ const searchHampers = [
         }
         dropdown.innerHTML = matches.map(h => `
             <div class="search-dd-item" onclick="goSearch('${encodeURIComponent(h.name)}')">
-                <img src="${h.img}" alt="${h.name}" class="search-dd-img">
                 <div>
                     <div class="search-dd-name">${h.name}</div>
                     ${h.badge ? `<div class="search-dd-badge">${h.badge}</div>` : ''}

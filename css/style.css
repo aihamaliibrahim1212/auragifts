@@ -21,7 +21,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overscroll-behavior: none; background: #d4c9b0; }
 
 body {
     font-family: 'Inter', sans-serif;
@@ -30,6 +30,7 @@ body {
     overflow-x: hidden;
     line-height: 1.6;
     padding-top: var(--header-h);
+    overscroll-behavior: none;
 }
 
 ::-webkit-scrollbar { width: 10px; }
@@ -58,6 +59,7 @@ header {
     background: #ffffff;
     border-bottom: 1px solid transparent;
     transition: all 0.3s ease;
+    overflow: visible;
 }
 header.scrolled {
     border-bottom-color: var(--border-gray);
@@ -94,7 +96,7 @@ header.scrolled {
 }
 .header-search-wrap input:focus { border-color: #787878; }
 .header-search-wrap input::placeholder { color: #b0b0b0; }
-.navbar { display: flex; justify-content: center; align-items: center; padding: 12px 0; position: relative; z-index: 1; }
+.navbar { display: flex; justify-content: center; align-items: center; padding: 12px 0; position: relative; z-index: 0; }
 .logo {
     display: flex; align-items: center; gap: 12px;
     text-decoration: none; font-weight: 700; font-size: 1.4rem;
@@ -478,6 +480,8 @@ footer { background: #787878; color: rgba(255,255,255,0.85); padding: 60px 0 28p
 .full-banner {
     width: 100%;
     height: 520px;
+    margin-top: calc(-1 * var(--header-h));
+    padding-top: var(--header-h);
     /* Placeholder. replace with: background-image: url('your-banner.jpg'); */
     background-color: #d4c9b0;
     background-size: cover;
@@ -524,15 +528,14 @@ footer { background: #787878; color: rgba(255,255,255,0.85); padding: 60px 0 28p
 /* Search Dropdown */
 .search-dropdown {
     display: none;
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0; right: 0;
+    position: fixed;
     background: var(--white);
     border: 1.5px solid var(--border-gray);
     border-radius: 10px;
     box-shadow: var(--shadow-md);
-    z-index: 9999;
+    z-index: 999999;
     overflow: hidden;
+    min-width: 300px;
 }
 .search-dropdown.open { display: block; }
 .search-dd-item {
