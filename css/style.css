@@ -760,13 +760,19 @@ footer { background: #787878; color: rgba(255,255,255,0.85); padding: 60px 0 28p
 .banner-slide {
     flex: 0 0 100%;
     height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    overflow: hidden;
+}
+.banner-slide-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 .banner-slide::before {
     content: '';
